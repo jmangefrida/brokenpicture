@@ -26,7 +26,7 @@ foreach ($games as $game) {
         if ($game->waiting($user->getId()) == true) {
             echo "<span><a href='play.php?id=" . $game->get_last_turn() . "'>" . $game->id . "</a></span><span class=\"label label-info\">New</span><br>";
         } else {
-            echo "<span><a href='play.php?id=" . $game->idhash . "'>" . $game->id . "</a></span><br>";
+            echo "<span><a href='play.php?id=" . $game->get_last_turn() . "'>" . $game->id . "</a></span><br>";
         }
     }
 }
