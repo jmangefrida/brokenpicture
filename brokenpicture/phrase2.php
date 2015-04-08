@@ -63,6 +63,7 @@ if ($user instanceof user) {
 </canvas>
 </div>
 <div id="colors" class="panes">
+<div class=colors id=erase onclick="cleardrawing();">erase</div>
 <input id = "colorpicker" type="color" onchange="colorchange();">
 <div class=colors id=red onclick="red();"></div>
 <div class=colors id=blue onclick="blue();"></div>

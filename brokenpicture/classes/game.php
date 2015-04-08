@@ -151,6 +151,7 @@ class game implements Iterator
         foreach ($game_list as $game) {
             $games[] = new game($game);
         }
+        rsort($games);
         return $games;
     }
     

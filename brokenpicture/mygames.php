@@ -41,7 +41,7 @@ if ($user instanceof user) {
     <![endif]-->
   </head>
 
-  <body onload="scroll();">
+  <body onload="">
     <?php include_once("code/analyticstracking.php") ?>
     <?php require_once 'ui/navbar.php'; ?>
     
@@ -54,7 +54,14 @@ if ($user instanceof user) {
   </div>
 </div>
     
-    
+      <div class="panel panel-primary" id="gamedescription">
+  <div class="panel-heading">
+    <h3 class="panel-title">Game Info</h3>
+  </div>
+  <div class="panel-body" id="gamedescriptioncontent">
+    testing
+  </div>
+</div>
     
    
         <!-- Bootstrap core JavaScript

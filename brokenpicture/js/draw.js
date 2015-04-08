@@ -87,6 +87,10 @@ function colorchange() {
 	color = document.getElementById("colorpicker").value;
 }
 
+function cleardrawing() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 function stopDraw() {
 if(drawing) { 
 drawing = false;
@@ -166,6 +170,12 @@ function sendphrase(status) {
 	   window.location.replace("http://brokenpicture.com/mygames.php");
    });
 
+}
+
+function loadgameinfo(hash) {
+	$.get("http://brokenpicture.com/code/getgameinfo.php?hash=" + hash, function(data, status) {
+		document.getElementById('gamedescriptioncontent').innerHTML = data;
+	});
 }
 
 //function sendCoord() {
