@@ -1,0 +1,55 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	width: 100%;
+}
+
+.panes {
+	display:inline-block;
+}
+
+#get_phrase {
+	width: 50%;
+}
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+#colors {
+	width: 25px;
+}
+
+.colors {
+	display:inline-block;
+	width:20px;
+	height:20px;
+	border:1px solid rgb(128,128,128);
+	
+}
+
+.colors#red {
+	background:rgb(255,0,0);
+}
+
+.colors#green {
+	background:rgb(0,255,0);
+}
+
+.colors#blue {
+	background:rgb(0,0,255);
+}
+
+.colors#black {
+	background:rgb(0,0,0);
+}
+
+.colors#yellow {
+	background:rgb(255,255,0);
+}
+
+.colors#white {
+	background:rgb(255,255,255);
+}

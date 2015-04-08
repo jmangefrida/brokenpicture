@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="bootstrap-3.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="main.css">
+<meta charset="UTF-8">
+<title>Start your game</title>
+</head>
+<body>
+<div><div class="center-block">...</div>
+<div>
+<input type="text" class="center-block form-control input-lg" id=get_phrase placeholder="Enter your phrase here">
+<br>
+<button type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#exampleModal" >Send to next player</button>
+</div>
+
+<div id="page"></div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" id=modalbox>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Send to Next Player</h4>
+      </div>
+      <div class="modal-body">
+ <div class="form-group">
+    <label for="inputEmail">Email</label>
+    <input type="text" class="form-control" id="inputEmail" placeholder="Jane.Doe@example.com">
+  </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="sendphrase();" data-dismiss="modal">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap-3.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+<script type="text/javascript" src=jquery-1.11.2.js></script>
+<script type="text/javascript">
+function sendphrase() {
+	var phraseval = $( "#get_phrase" ).val();
+	var nextplayer = $("#inputEmail").val();
+   $.post("http://cpuoftheheart.com/drawing/start.php",{ phrase: phraseval, player: nextplayer }).done(function( data ) {
+	   report = document.getElementById("page");
+	   alert(data);
+   });
+
+}
+</script>
+</html>

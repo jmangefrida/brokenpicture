@@ -1,0 +1,36 @@
+<html>
+<head>
+<script type="text/javascript" src=draw.js></script>
+<script src="ui/external/jquery/jquery.js"></script>
+<script src="ui/jquery-ui.js"></script>
+
+
+</head>
+<body onmousedown="return false;">
+<canvas id="Canvas0" width=600 height=600 style="border:1px solid #c3c3c3;width:600px;height:600px;" onmousedown="startDraw(event)" onmousemove="doDraw(event)" onmouseup="stopDraw()" onmouseout="stopDraw()" touchstart="startDraw(event)" touchmove="doDraw(event)" >
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+<div id=report></div>
+</body>
+<script type="text/javascript">
+var drawTouch = function() {
+	var start = function(e) {
+	ctx.beginPath();
+	x = e.changedTouches[0].pageX;
+	y = e.changedTouches[0].pageY-44;
+	ctx.moveTo(x,y);
+	};
+	var move = function(e) {
+	e.preventDefault();
+	x = e.changedTouches[0].pageX;
+	y = e.changedTouches[0].pageY-44;
+	ctx.lineTo(x,y);
+	ctx.stroke();
+	};
+	document.getElementById("canvas0").addEventListener("touchstart", start, false);
+	document.getElementById("canvas0").addEventListener("touchmove", move, false);
+	}; 
+
+	drawTouch();
+</script>
+</html>
