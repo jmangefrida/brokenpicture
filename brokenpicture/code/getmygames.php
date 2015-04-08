@@ -31,6 +31,8 @@ foreach ($games as $game) {
     }
 }
 
+
+
 // $conn = dbconn::getInstance();
 // //echo $user->getId();
 

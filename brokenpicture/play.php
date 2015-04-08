@@ -32,14 +32,7 @@ $_SESSION['game'] = $game->id;
 //echo "1.6";
 $game->load_turn($idhash);
 
-if (!($user->getId() == $game->turn[$idhash]->receiver)){
-    var_dump($game->turn[$idhash]);
-    echo $user->getId();
-    echo "|" . $game->turn[$idhash]->id;
-    $result =  "Sorry, this turn was not sent to you.";
-    //include_once 'sorry.php';
-    exit;
-}
+
 
 
 //echo "1.7";
@@ -70,7 +63,14 @@ if ($game->status == 2) {
 }
 //echo "3";
 
-
+if (!($user->getId() == $game->turn[$idhash]->receiver)){
+    var_dump($game->turn[$idhash]);
+    echo $user->getId();
+    echo "|" . $game->turn[$idhash]->id;
+    $result =  "Sorry, this turn was not sent to you.";
+    //include_once 'sorry.php';
+    exit;
+}
 
 $result = $game->turn[$idhash]->get_data();
 //echo "4";
