@@ -30,7 +30,7 @@ if ($_POST['status'] == "end") {
     $game->set_turn_status($hash, 2);
     $game->load_all_turns();
     $players = $game->get_all_users();
-    var_dump($players);
+    //var_dump($players);
     $mail = new mailer();
     foreach ($players as $player) {
         $email = user::lookup_email($player);
@@ -40,19 +40,22 @@ if ($_POST['status'] == "end") {
 } else {
     
     $email = $_POST['player'];
-    //echo $email;
+    
     $nextplayer = user::exists($email);
 
     if ($nextplayer == 0) {
         $invitation = new invitation($email);
-        $invitation->send($user->getEmail());
         $nextid = $invitation->id;
     } else {
         $nextid = 0;
     }
-    //echo $game->id;
+    
     $hash = $game->new_turn($user->getId(), $nextplayer, $nextid, $_POST['data']);
-    if ($nextplayer > 0) {
+    
+    //The phpmailer autoloader breaks my autoloader so it must be the last object instantiated.
+    if ($nextplayer == 0) {
+        $invitation->send($user->getEmail());
+    } else {
         $mail = new mailer();
         $mail->send($email, $hash,$user->getEmail());
     }

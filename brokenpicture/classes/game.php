@@ -68,6 +68,17 @@ class game implements Iterator
         //echo var_dump($this->turn);
     }
     
+    public function count_turns() {
+        $conn = dbconn::getInstance();
+        $sql = "select count(id) from turns where game = " . $this->id;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $stmt->bindColumn(1, $count);
+        $stmt->fetch(PDO::FETCH_BOUND);
+        return $count;
+        
+    }
+    
     public static function sort_turns($a, $b) {
         if($a->turn > $b->turn) {
             return $a;
