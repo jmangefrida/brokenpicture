@@ -92,6 +92,29 @@ class user
         // TODO - Insert your code here
     }
     
+    public function add_friend($friend) {
+        $conn = dbconn::getInstance();
+        $entry = array($this->id,$friend);
+        sort($entry);
+        $sql = "insert into friends values (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($entry);
+        
+    }
+    
+    public function get_friends() {
+        $conn = dbconn::getInstance();
+        $sql = "select users.email as email from friends join users on friends.a = users.id where friends.b = ? UNION ";
+        $sql .= "select users.email as email from friends join users on friends.b = users.id where friends.a = ?";
+        //echo $sql;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array($this->id, $this->id));
+        while (($row = $stmt->fetch()) != false) {
+        //    echo $row['email'];
+            $friends[] = $row['email'];
+        }
+        return $friends;
+    }
     
     public static function exists($email) {
         $conn = dbconn::getInstance();

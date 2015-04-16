@@ -58,6 +58,7 @@ if ($_POST['status'] == "end") {
     } else {
         $mail = new mailer();
         $mail->send($email, $hash,$user->getEmail());
+        $user->add_friend($nextplayer);
     }
 }
 

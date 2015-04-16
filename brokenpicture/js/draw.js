@@ -14,8 +14,55 @@ var y2;
 var ctx;
 var touch;
 var color = "#000000";
+var friends = "['jmange@gmail.com']";
 //ctx.fillStyle="#FF0000";
 //ctx.fillRect(0,0,150,75);
+
+var substringMatcher = function(strs) {
+	return function findMatches(q, cb) {
+	var matches, substrRegex;
+	 
+	// an array that will be populated with substring matches
+	matches = [];
+	 
+	// regex used to determine if a string contains the substring `q`
+	substrRegex = new RegExp(q, 'i');
+	 
+	// iterate through the pool of strings and for any string that
+	// contains the substring `q`, add it to the `matches` array
+	$.each(strs, function(i, str) {
+	if (substrRegex.test(str)) {
+	// the typeahead jQuery plugin expects suggestions to a
+	// JavaScript object, refer to typeahead docs for more info
+	matches.push({ value: str });
+	}
+	});
+	 
+	cb(matches);
+	};
+	};
+	
+	
+	
+	$.getJSON("code/getfriends.php", function(data) {
+		friends = data;
+		//alert(friends);
+		$('#inputEmail').typeahead({
+			hint: true,
+			highlight: true,
+			minLength: 1
+			},
+			{
+			name: 'friends',
+			displayKey: 'value',
+			source: substringMatcher(friends)
+			}); 
+		
+	});
+	
+	
+	 
+	
 
 function scroll(){
 	setTimeout(window.scrollTo(0,100),2000);
