@@ -34,13 +34,13 @@ class game_collection implements \Iterator
      *
      */
     
-    public function getGame($num) {
+    public function getGame($num)
+    {
         return $this->games[$num];
     }
     
     public function valid()
     {
-        
         return ( ! is_null($this->current()));
     }
 
@@ -95,5 +95,3 @@ class game_collection implements \Iterator
         // TODO - Insert your code here
     }
 }
-
-?>

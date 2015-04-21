@@ -30,7 +30,7 @@
                 <li class="dropdown">
                     <?php echo $greeting ?>  
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#settingsModal">Settings</a></li>
                         <li><a href="#" onclick="logout();">Log out</a></li>
                     </ul>
                 </li>
@@ -38,3 +38,4 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+    <?php include_once 'ui/usersettings.php';?>

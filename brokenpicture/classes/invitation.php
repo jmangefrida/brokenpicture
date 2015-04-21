@@ -26,7 +26,8 @@ class invitation
         // TODO - Insert your code here
     }
     
-    private function load($id) {
+    private function load($id)
+    {
         $conn = dbconn::getInstance();
         $sql = "select id, email, time, status from invitations where id = " . $id;
         $stmt = $conn->prepare($sql);
@@ -39,7 +40,8 @@ class invitation
         //echo $this->email;
     }
     
-    private function create($email) {
+    private function create($email)
+    {
         $conn = dbconn::getInstance();
         $sql = "insert into invitations (email, time) values (:email, now())";
         $stmt = $conn->prepare($sql);
@@ -50,13 +52,15 @@ class invitation
         $this->load($id);
     }
     
-    public function send($from) {
+    public function send($from)
+    {
         $mail = new mailer();
         //echo $this->email;
         $mail->invite($this->email, "http://brokenpicture.com/signup.php", $from);
     }
     
-    public static function check_exists($email) {
+    public static function check_exists($email)
+    {
         $conn = dbconn::getInstance();
         $id = 0;
         $count = 0;
@@ -82,5 +86,3 @@ class invitation
     
     
 }
-
-?>

@@ -57,7 +57,8 @@ class turn
         // TODO - Insert your code here
     }
     
-    public static function new_turn($game, $player, $nextplayer, $invitation, $data) {
+    public static function new_turn($game, $player, $nextplayer, $invitation, $data) 
+    {
         $conn = dbconn::getInstance();
         $turn = 0;
         $id = 0;
@@ -91,10 +92,10 @@ class turn
             self::add_image($id, $data);
         }
         return $idhash;
-        
     }
     
-    public function get_data() {
+    public function get_data()
+    {
         if ($this->turn % 2 == 1) {
             return $this->data;
         } else {
@@ -102,7 +103,8 @@ class turn
         }
     }
     
-    public static function get_all_turns($game) {
+    public static function get_all_turns($game)
+    {
         //$turns[] = array();
         $conn = dbconn::getInstance();
         $sql = "select idhash from turns where game = ?";
@@ -114,14 +116,16 @@ class turn
         return $turns;
     }
     
-    public static function set_status($game, $hash, $status) {
+    public static function set_status($game, $hash, $status)
+    {
         $conn = dbconn::getInstance();
         $sql = "update turns set status = ? where idhash = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($status, $hash));
     }
     
-    public static function get_status($game, $hash) {
+    public static function get_status($game, $hash)
+    {
         $conn = dbconn::getInstance();
         $sql = "select status from turns where idhash = ?";
         $stmt = $conn->prepare($sql);
@@ -130,7 +134,8 @@ class turn
         return $status;
     }
     
-   public static function get_game($hash) {
+   public static function get_game($hash)
+   {
        $conn = dbconn::getInstance();
        $sql = "select game from turns where idhash = ?";
        $stmt = $conn->prepare($sql);
@@ -140,7 +145,8 @@ class turn
        return $game;
    }
     
-    private static function add_phrase($id, $phrase) {
+    private static function add_phrase($id, $phrase)
+    {
         $conn = dbconn::getInstance();
         $sql = "insert into phrases (id, phrase) values (:id, :phrase)";
         $stmt = $conn->prepare($sql);
@@ -150,14 +156,16 @@ class turn
         $stmt->execute();
     }
     
-    private static function add_image($id, $data) {
+    private static function add_image($id, $data)
+    {
         $binary = str_replace("data:image/octet-stream;base64,", "", $data);
         $binary = base64_decode($binary);
         $blobObj = new BlobDemo();
         $blobObj->insertBlob($id,$binary,"image/png");
     }
     
-    public static function get_user_games($user) {
+    public static function get_user_games($user)
+    {
         $conn = dbconn::getInstance();
         $sql = "select distinct game from turns where player = ? or receiver = ? order by game";
         $stmt = $conn->prepare($sql);
@@ -168,5 +176,3 @@ class turn
         return $games;
     }
 }
-
-?>

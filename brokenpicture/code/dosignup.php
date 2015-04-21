@@ -47,5 +47,3 @@ if ($_POST['password1'] == $_POST['password2']) {
 } else {
     echo "The passwords do not match.";
 }
-
-;

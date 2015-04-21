@@ -92,7 +92,8 @@ class user
         // TODO - Insert your code here
     }
     
-    public function add_friend($friend) {
+    public function add_friend($friend)
+    {
         $conn = dbconn::getInstance();
         $entry = array($this->id,$friend);
         sort($entry);
@@ -102,7 +103,8 @@ class user
         
     }
     
-    public function get_friends() {
+    public function get_friends()
+    {
         $conn = dbconn::getInstance();
         $sql = "select users.email as email from friends join users on friends.a = users.id where friends.b = ? UNION ";
         $sql .= "select users.email as email from friends join users on friends.b = users.id where friends.a = ?";
@@ -116,7 +118,8 @@ class user
         return $friends;
     }
     
-    public static function exists($email) {
+    public static function exists($email)
+    {
         $conn = dbconn::getInstance();
         $sql = "select count(id) from users where email = ?";
         $stmt = $conn->prepare($sql);
@@ -136,7 +139,8 @@ class user
     }
 
     
-    public static function create_user($email, $contact_type, $contact, $password){
+    public static function create_user($email, $contact_type, $contact, $password)
+    {
         try {
             $conn = dbconn::getInstance();
             $hash = password_hash($password, PASSWORD_BCRYPT);
@@ -167,7 +171,8 @@ class user
         
     }
     
-    public static function login_user($email, $password) {
+    public static function login_user($email, $password)
+    {
         $id = user::verify_password($email, $password);
         if ($id > 0) {
             user::update_session($id);
@@ -180,7 +185,8 @@ class user
         
     }
     
-    private static function update_session($id) {
+    private static function update_session($id)
+    {
         $value = str_shuffle(sha1(microtime()));
         setcookie("user",$value,time() + (86400 * 30), "/");
         $conn = dbconn::getInstance();
@@ -192,7 +198,8 @@ class user
         $stmt->execute(array($id,$value));
     }
     
-    public static function check_login() {
+    public static function check_login()
+    {
         if(isset($_COOKIE['user'])) {
             $conn = dbconn::getInstance();
             $sql = "select user_id, expires from user_sessions where session = ?";
@@ -211,7 +218,8 @@ class user
         }
     }
     
-    public static function verify_password($email, $password) {
+    public static function verify_password($email, $password)
+    {
         $conn = dbconn::getInstance();
         $sql = "select password from users where email = ?";
         $stmt = $conn->prepare($sql);
@@ -232,12 +240,14 @@ class user
         }
     }
     
-    public static function user_logout() {
+    public static function user_logout()
+    {
         unset($_COOKIE['user']);
         setcookie("user",null,-1,"/");
     }
     
-    public static function lookup_email($id) {
+    public static function lookup_email($id)
+    {
         $conn = dbconn::getInstance();
         $sql = "select email from users where id = ?";
         $stmt = $conn->prepare($sql);
@@ -247,5 +257,3 @@ class user
         return $email;
     }
 }
-
-?>

@@ -32,4 +32,6 @@ $receiver = $game->turn[$game->get_last_turn()]->receiver;
 
 if (($game->status < 2) && ($receiver == $user->getId())) {
   echo "<p><a href=\"http://brokenpicture.com/play.php?id=" . $idhash . "\">Play!</a>";  
+} elseif ($game->status == 2) {
+    echo "<p><a href=\"http://brokenpicture.com/play.php?id=" . $idhash . "\">View finished game</a>";
 }

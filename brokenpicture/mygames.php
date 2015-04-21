@@ -47,7 +47,7 @@ if ($user instanceof user) {
     
     <div class="panel panel-primary" id="gamelist">
   <div class="panel-heading">
-    <h3 class="panel-title">My Games</h3>
+    <h3 class="panel-title">Active Games</h3>
   </div>
   <div class="panel-body">
     <?php include_once 'code/getmygames.php';?>
@@ -62,7 +62,15 @@ if ($user instanceof user) {
     testing
   </div>
 </div>
-    
+
+    <div class="panel panel-primary" id="gamelist">
+  <div class="panel-heading">
+    <h3 class="panel-title">Finished Games</h3>
+  </div>
+  <div class="panel-body">
+    <?php include_once 'code/getmyfinishedgames.php';?>
+  </div>
+</div>
    
         <!-- Bootstrap core JavaScript
     ================================================== -->

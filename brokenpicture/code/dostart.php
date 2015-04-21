@@ -13,11 +13,11 @@ if ($user instanceof user) {
   exit;
 }
 echo $email;
-echo "1";
+//echo "1";
 $game = game::new_game();
-echo "2";
+//echo "2";
 $nextplayer = user::exists($email);
-echo "3";
+//echo "3";
 if ($nextplayer == 0) {
     $invitation = new invitation($email);
     //$invitation->send($user->getEmail());
@@ -31,7 +31,7 @@ if ($nextplayer == 0) {
     $nextid = 0;
     //include 'mail.php';
 }
-echo "4";
+//echo "4";
 
 $hash = $game->new_turn($user->getId(), $nextplayer, $nextid, $_POST['phrase']);
 

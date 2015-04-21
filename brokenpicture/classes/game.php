@@ -29,14 +29,16 @@ class game implements Iterator
         // TODO - Insert your code here
     }
     
-    public static function new_game() {
+    public static function new_game()
+    {
         $id = self::create_game();
         $game = new game($id);
         
         return $game;
     }
     
-    public function set_status($status) {
+    public function set_status($status)
+    {
         $this->status = $status;
         $conn = dbconn::getInstance();
         $sql = "update games set status = ? where id = " . $this->id;
@@ -45,7 +47,8 @@ class game implements Iterator
     }
     
     
-    public function new_turn($player, $nextplayer, $invitation, $data) {
+    public function new_turn($player, $nextplayer, $invitation, $data)
+    {
         echo 'newturn';
         echo $this->id . '|';
         echo $player . '|';
@@ -58,17 +61,20 @@ class game implements Iterator
         return $turn;
     }
     
-    public function load_turn($idhash) {
+    public function load_turn($idhash)
+    {
         $this->turn[$idhash] = new turn($idhash);
     }
     
-    public function load_all_turns() {
+    public function load_all_turns()
+    {
         $this->turn = turn::get_all_turns($this->id);
         //usort($this->turn, array('/var/www/brokenpicture.com/classes/game.php','sort_turns'));
         //echo var_dump($this->turn);
     }
     
-    public function count_turns() {
+    public function count_turns()
+    {
         $conn = dbconn::getInstance();
         $sql = "select count(id) from turns where game = " . $this->id;
         $stmt = $conn->prepare($sql);
@@ -79,7 +85,8 @@ class game implements Iterator
         
     }
     
-    public static function sort_turns($a, $b) {
+    public static function sort_turns($a, $b)
+    {
         if($a->turn > $b->turn) {
             return $a;
         } else {
@@ -87,7 +94,8 @@ class game implements Iterator
         }
     }
     
-    public function get_turn_hashes() {
+    public function get_turn_hashes()
+    {
         foreach ($this->turn as $turn) {
             $turns[$turn->turn] = $turn->idhash;
         }
@@ -96,16 +104,19 @@ class game implements Iterator
         //return (array_keys($this->turn));
     }
     
-    public function get_turn_status($hash) {
+    public function get_turn_status($hash)
+    {
         $status = turn::get_status($this->id, $hash);
         return $status;
     }
     
-    public function set_turn_status($hash, $status) {
+    public function set_turn_status($hash, $status)
+    {
         turn::set_status($this->id, $hash, $status);
     }
     
-    public function waiting($user) {
+    public function waiting($user)
+    {
         //$this->load_all_turns();
         foreach ($this->turn as $turn) {
             if ($turn->status == 0 && $turn->receiver == $user) {
@@ -115,7 +126,8 @@ class game implements Iterator
         return false;
     }
     
-    public function get_last_turn() {
+    public function get_last_turn()
+    {
         foreach ($this->turn as $turn) {
             if ($turn->status == 0 || $turn->status == 2) {
                 return $turn->idhash;
@@ -124,7 +136,8 @@ class game implements Iterator
         return false;
     }
     
-    public function get_first_turn() {
+    public function get_first_turn()
+    {
         foreach ($this->turn as $turn) {
             if ($turn->turn == 1) {
                 return $turn->idhash;
@@ -132,7 +145,8 @@ class game implements Iterator
         }
     }
     
-    public function get_all_users() {
+    public function get_all_users()
+    {
         //$player[] = array();
         foreach ($this->turn as $turn) {
             $player[$turn->player] = $turn->player;
@@ -141,7 +155,8 @@ class game implements Iterator
         return $player;
     }
     
-    private static function create_game() {
+    private static function create_game()
+    {    
         $conn = dbconn::getInstance();
         $conn->beginTransaction();
         $sql = "insert into games (id, idhash,status) (select max(id) + 1, md5(max(id) + 1), 0 from games)";
@@ -157,7 +172,8 @@ class game implements Iterator
         return $gameid;
     }
     
-    public static function get_user_games($user) {
+    public static function get_user_games($user)
+    {
         $game_list = turn::get_user_games($user);
         foreach ($game_list as $game) {
             $games[] = new game($game);
@@ -204,5 +220,3 @@ class game implements Iterator
     
     
 }
-
-?>

@@ -21,7 +21,8 @@ class mailer
         
     }
     
-    function send($to, $message, $from){
+    function send($to, $message, $from)
+    {
         $this->mail->Subject = 'Your Turn';
         $this->msg = file_get_contents('/var/www/brokenpicture.com/mail/contents.html');
         $this->mail->addAddress($to);
@@ -37,8 +38,8 @@ class mailer
         }
     }
     
-    function invite($to, $message, $from) {
-        
+    function invite($to, $message, $from)
+    {    
         $this->mail->Subject = $from . "has sent you an invitation to a game.";
         $this->mail->addAddress($to);
         $this->msg = file_get_contents('/var/www/brokenpicture.com/mail/invite.html');
@@ -54,8 +55,8 @@ class mailer
         }
     }
     
-    function finish($to, $message) {
-    
+    function finish($to, $message)
+    {
         $this->mail->Subject = "A game you were playing has finished!";
         $this->mail->addAddress($to);
         $this->msg = file_get_contents('/var/www/brokenpicture.com/mail/finish.html');
@@ -72,5 +73,3 @@ class mailer
         $this->mail->clearAddresses();
     }
 }
-
-?>

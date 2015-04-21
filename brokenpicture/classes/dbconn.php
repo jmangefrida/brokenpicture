@@ -3,7 +3,8 @@
 //namespace classes;
 
 // The Database class represents our global DB connection
-class dbconn extends PDO {
+class dbconn extends PDO
+{
         // A static variable to hold our single instance
         private static $_instance = null;
 
