@@ -12,6 +12,7 @@ class user
     private $contact_type;
     private $contact;
     private $password;
+    protected $username;
     /**
      * @return the $id
      */
@@ -42,6 +43,16 @@ class user
     public function getContact()
     {
         return $this->contact;
+    }
+    
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    
+    public function setUsername($username)
+    {
+        $this->username = $username;
     }
 
  /**
@@ -81,13 +92,14 @@ class user
     function __construct($id)
     {
         $conn = dbconn::getInstance();
-        $sql = "select id, email, contact_type, contact from users where id = ?";
+        $sql = "select id, email, contact_type, contact, username from users where id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($id));
         $stmt->bindColumn(1, $this->id);
         $stmt->bindColumn(2, $this->email);
         $stmt->bindColumn(3, $this->contact_type);
         $stmt->bindColumn(4, $this->contact);
+        $stmt->bindColumn(5, $this->username);
         $stmt->fetch(PDO::FETCH_BOUND);
         // TODO - Insert your code here
     }
@@ -151,7 +163,7 @@ class user
             $stmt->bindColumn(1, $count);
             $stmt->fetch(PDO::FETCH_BOUND);
             if ($count == 0) {
-                $sql = "insert into users (email, contact_type, contact, password) values(?, ?, ?, ?)";
+                $sql = "insert into users (email, contact_type, contact, password, signup_date) values(?, ?, ?, ?, now())";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute(array($email, $contact_type, $contact, $hash));
                 //echo var_dump(array($email, $contact_type, $contact, $hash));

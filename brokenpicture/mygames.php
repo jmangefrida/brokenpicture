@@ -59,7 +59,7 @@ if ($user instanceof user) {
     <h3 class="panel-title">Game Info</h3>
   </div>
   <div class="panel-body" id="gamedescriptioncontent">
-    testing
+    
   </div>
 </div>
 
