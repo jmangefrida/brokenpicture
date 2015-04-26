@@ -72,4 +72,22 @@ class mailer
         }
         $this->mail->clearAddresses();
     }
+    
+    function stale($to)
+    {
+        $this->mail->Subject = "A game is still waiting on you.";
+        $this->mail->addAddress($to);
+        $this->msg = file_get_contents('/var/www/brokenpicture.com/mail/stale.html');
+        $this->msg = str_replace('#LINK#', 'http://brokenpicture.com/mygames.php', $this->msg);
+        //$this->msg = str_replace('#FROM#', $from, $this->msg);
+        $this->mail->msgHTML($this->msg);
+        $this->mail->AltBody = $message;
+        
+        if (!$this->mail->send()) {
+            echo "Mailer Error: " . $this->mail->ErrorInfo;
+        } else {
+            echo "Notification sent!";
+        }
+        $this->mail->clearAddresses();
+    }
 }
