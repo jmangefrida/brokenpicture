@@ -5,6 +5,7 @@
 function signup() {
 	
 	var email = $('#inputEmail').val();
+	var username = $('#inputUsername').val();
 	var password1 = $('#password1').val();
 	var password2 = $('#password2').val();
 	var agree = $('#agree').val();
@@ -12,7 +13,7 @@ function signup() {
 	$('#notify').removeClass("bg-danger");
 	$('#notify').addClass("invisible");
 	
-	$.post("code/dosignup.php",{ email: email, password1: password1, password2: password2, agree: agree}).done(function( data ) {
+	$.post("code/dosignup.php",{ email: email, username: username, password1: password1, password2: password2, agree: agree}).done(function( data ) {
 		$('#notify').removeClass("invisible");
 		if (data == "good") {
 			$('#notify').addClass("bg-success");

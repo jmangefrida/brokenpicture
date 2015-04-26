@@ -9,14 +9,15 @@ if ($_POST['agree'] == '') {
     exit;
 }
 
-if ($_POST['password1'] == $_POST['password2']) {
+if (($_POST['password1'] != '') && ($_POST['password1'] == $_POST['password2'])) {
     
     $email = $_POST['email'];
+    $username = $_POST['username'];
     $contact_type = 1;
     $contact = '';
     $password = $_POST['password1'];
     
-    $user = user::create_user($email, $contact_type, $contact, $password);
+    $user = user::create_user($email, $username, $contact_type, $contact, $password);
     $conn = dbconn::getInstance();
     
   
@@ -42,7 +43,7 @@ if ($_POST['password1'] == $_POST['password2']) {
         
         echo "good";
     } else {
-        echo "This email already exists.";
+        echo $user;
     }
 } else {
     echo "The passwords do not match.";

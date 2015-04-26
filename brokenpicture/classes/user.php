@@ -149,38 +149,49 @@ class user
         }
         
     }
+    
+    public static function existsUsername($username)
+    {
+        $conn = dbconn::getInstance();
+        $sql = "select count(id) from users where username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array($username));
+        $count = $stmt->fetchColumn();
+        if ($count == 1) {
+            $sql = "select id from users where username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array($username));
+            return (int)$stmt->fetchColumn();
+        } else {
+            return 0;
+        }
+        
+    }
 
     
-    public static function create_user($email, $contact_type, $contact, $password)
+    public static function create_user($email, $username, $contact_type, $contact, $password)
     {
-        try {
-            $conn = dbconn::getInstance();
-            $hash = password_hash($password, PASSWORD_BCRYPT);
-            //$conn->beginTransaction();
-            $sql = "select count(id) from users where email = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute(array($email));
-            $stmt->bindColumn(1, $count);
-            $stmt->fetch(PDO::FETCH_BOUND);
-            if ($count == 0) {
-                $sql = "insert into users (email, contact_type, contact, password, signup_date) values(?, ?, ?, ?, now())";
+        
+            
+        if (self::existsUsername($username) == 0) {
+            if (self::exists($email) == 0) {
+                $hash = password_hash($password, PASSWORD_BCRYPT);
+                $conn = dbconn::getInstance();
+                $sql = "insert into users (email, username, contact_type, contact, password, signup_date) values(?,?, ?, ?, ?, now())";
+                try {
                 $stmt = $conn->prepare($sql);
-                $stmt->execute(array($email, $contact_type, $contact, $hash));
-                //echo var_dump(array($email, $contact_type, $contact, $hash));
-                //echo var_dump($stmt->errorCode());
-                //echo $stmt->errorInfo();
-                
-                //$user = new user(user::exists($email));
+                $stmt->execute(array($email, $username, $contact_type, $contact, $hash));
+                } catch (PDOException $e) {
+                    return "Internal Error.";
+                }
                 $user = user::login_user($email, $password);
                 return $user;
             }else {
-                return false;
+                return 'Email already exists';
             }
-        } catch (PDOException $e) {
-            return "Internal Error.";
+        } else {
+            return 'Username already exists';
         }
-        
-        
     }
     
     public static function login_user($email, $password)
@@ -267,5 +278,16 @@ class user
         $stmt->bindColumn(1, $email);
         $stmt->fetch(PDO::FETCH_BOUND);
         return $email;
+    }
+    
+    public static function lookupUsername($id)
+    {
+        $conn = dbconn::getInstance();
+        $sql = "select username from users where id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array($id));
+        $stmt->bindColumn(1, $username);
+        $stmt->fetch(PDO::FETCH_BOUND);
+        return $username;
     }
 }

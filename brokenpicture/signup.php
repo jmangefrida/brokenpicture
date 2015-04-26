@@ -9,7 +9,7 @@ $user = user::check_login();
 
 if ($user instanceof user) {
     //session_start();
-    $greeting = "Welcome, <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-expanded=\"false\">" . $user->getEmail() . "</a>";
+    $greeting = "Welcome, <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-expanded=\"false\">" . $user->getUsername() . "</a>";
 } else {
     $greeting = "<a href=\"login.php\">Log In</a> / <a href=\"signup.php\">Sign Up</a>";
 }
@@ -52,6 +52,10 @@ if ($user instanceof user) {
   <div class="form-group">
     <label for="inputEmail1">Email address</label>
     <input type="email" class="form-control" id="inputEmail" placeholder="email">
+  </div>
+  <div class="form-group">
+    <label for="inputUsername">Username</label>
+    <input type="text" class="form-control" id="inputUsername" placeholder="Username">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>

@@ -23,8 +23,9 @@ echo "<b>Players already in game:</b><br>";
 $users = $game->get_all_users();
 
 foreach ($users as $player) {
-   $email = user::lookup_email($player);
-    echo $email . "<br>";
+   //$email = user::lookup_email($player);
+   $username = user::lookupUsername($player);
+    echo $username . "<br>";
 }
 
 $game->load_all_turns();
